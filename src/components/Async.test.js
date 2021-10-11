@@ -4,6 +4,16 @@ import Async from "./Async";
 describe("Async component", () => {
   //  ASYNC!!
   test("renders post if request succedes", async () => {
+    //  This is a mock! It pretends to send a fetch() request, but doesn't really!
+    window.fetch = jest.fn();
+    //  The Promise gets a JSON object or something:
+    window.fetch.mockResolvedValueOnce({
+      //  This is fake data that you're pretending to return.
+      //  Make sure you test data that could actually be in your database!
+      //  This ignores the actual fetch() in Async.js so that it never runs.
+      //  Esp impt for POST requests, won't actually insert data into your database!
+      json: async () => [{ id: "p1", title: "First post" }],
+    });
     render(<Async />);
 
     //  Something abt this sees if any elements have the "role" of <li>?
@@ -19,6 +29,7 @@ describe("Async component", () => {
     //const listItemElements = screen.findAllByRole("listitem", {}, {});
 
     //  This still doesn't work, possibly bec this coffee shop WiFi is too slow to fetch in 1s?
+    //  LOL, yep it works on my parents' WIFI :)
     const listItemElements = await screen.findAllByRole("listitem");
     expect(listItemElements).not.toHaveLength(0);
   });
