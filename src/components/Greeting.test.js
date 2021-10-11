@@ -1,3 +1,6 @@
+//  This is technically an Integration Test now, bec tests the mult
+//  Output.js inside of Greeting.js!
+
 import { render, screen } from "@testing-library/react";
 //  For the button click:
 import userEvent from "@testing-library/user-event";
